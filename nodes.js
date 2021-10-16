@@ -1,4 +1,4 @@
-const fetchRate = 100;
+const fetchRate = 200;
 const MessageDuration = 36000;
 const colorBack = "rgb(54,57,63)";
 const colorText = "rgb(255,255,255)";
@@ -134,6 +134,7 @@ let dataArr = [];
 let FetchErr = false;
 let FetchTextInt = 0;
 let fpsDel = [];
+let lastFetchErr = 0;
 for (let i=0;i<10;i++){
 	fpsDel.push(0);
 }
@@ -376,8 +377,13 @@ function httpGetAsync(theUrl, callback) {
     xmlHttp.onreadystatechange = function() {
         if (xmlHttp.readyState == 4 && xmlHttp.status == 200) {
             callback(xmlHttp.responseText);
-        } else if (xmlHttp.status != 0) {
-			FetchErr = true;
+            lastFetchErr = 0;
+        } else {
+        	if (lastFetchErr==0){
+        		lastFetchErr = Date.now();
+        	} else if (Date.now()-lastFetchErr>1000) {
+        		FetchErr = true;
+        	}
         }
     }
     xmlHttp.open("GET", theUrl, true); // true for asynchronous 
