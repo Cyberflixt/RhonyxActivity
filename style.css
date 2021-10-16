@@ -1,0 +1,15 @@
+body {
+  overflow: hidden; /* Hide scrollbars */
+}
+#CanvasMain {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  margin: 0px;
+  padding: 0px;
+  overflow: hidden;
+  left: 0px;
+  top: 0px;
+  bottom: 0px;
+  right: 0px;
+}
